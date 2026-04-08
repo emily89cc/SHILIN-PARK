@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>士林公園健身搜尋器</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    input { width: 100%; padding: 10px; margin-bottom: 20px; }
+    .park { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>簡易ㄉ士林公園健身搜尋器</h1>
+  <input type="text" id="search" placeholder="輸入公園名稱或設施...">
+  <div id="results"></div>
+
+  <script>
+    const parks = [
+      { name: "天母公園", equipment: ["籃球場爬架", "單槓", "雙人太空漫步", "三人轉腰", "三人上肢牽引期", "雙人太空漫步", "雙人肩關節康復器"] },
+      { name: "天和公園", equipment: ["單槓"] },
+      { name: "天壽公園", equipment: ["雙人浪板", "單人漫步機", "腰背按摩器", "三人轉腰器", "單槓"] },
+      { name: "外雙溪公園", equipment: ["雙人浪板", "單人漫步機", "腰背按摩器", "雙人轉腰器"] },
+      { name: "至善公園", equipment: ["雙人浪板", "單人漫步機", "雙人大轉輪", "腹肌板", "單槓"] },
+      { name: "至誠公園", equipment: ["雙人浪板", "單人漫步機", "雙人轉腰器", "單槓"] },
+      { name: "克強公園", equipment: ["雙人上肢牽引器", "雙人漫步機", "仰臥舉腿器", "三人轉腰器", "單槓"] },
+      { name: "忠誠公園", equipment: ["雙人伸腰伸背器", "單人划雪器", "雙人上肢牽引器", "雙人肩關節康復器", "三人轉腰器", "雙人太空漫步", "單槓"] },
+      { name: "蘭雅公園", equipment: ["單人浪板", "單人健騎", "雙人座蹬", "單人滑船", "雙人肩關節康復器", "單槓"] },
+      { name: "福志公園", equipment: ["雙人漫步機", "單人漫步機", "腰背按摩器", "三人轉腰器", "單槓", "雙人肩關節康復器"] },
+      { name: "磺溪公園", equipment: ["單人划船", "單人漫步機", "腰背按摩器", "雙人肩關節康復器", "單槓"] },
+      { name: "士林官邸公園", equipment: ["健身器材", "步道"] },
+      { name: "芝山岩公園", equipment: ["登山步道"] },
+      { name: "雙溪河濱公園", equipment: ["單槓", "跑步道", "自行車道"] },
+    ];
+
+    const resultsDiv = document.getElementById('results');
+    const searchInput = document.getElementById('search');
+
+    function display(parksList) {
+      resultsDiv.innerHTML = '';
+      parksList.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'park';
+        div.innerHTML = `<strong>${p.name}</strong><br>設施：${p.equipment.join(', ')}`;
+        resultsDiv.appendChild(div);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const keyword = searchInput.value.toLowerCase();
+      const filtered = parks.filter(p =>
+        p.name.includes(keyword) ||
+        p.equipment.some(e => e.includes(keyword))
+      );
+      display(filtered);
+    });
+
+    display(parks);
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台北公園健身搜尋器</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
+    input { width: 100%; padding: 10px; margin-bottom: 20px; }
+    .park { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>台北公園健身搜尋器</h1>
+  <input type="text" id="search" placeholder="輸入公園名稱或設施...">
+  <div id="results"></div>
+
+  <script>
+    const parks = [
+      { name: "士林官邸公園", equipment: ["健身器材", "步道"] },
+      { name: "芝山岩公園", equipment: ["登山步道", "體能設施"] },
+      { name: "雙溪河濱公園", equipment: ["單槓", "跑步道", "自行車道"] },
+      { name: "美崙公園", equipment: ["體健設施", "籃球場"] }
+    ];
+
+    const resultsDiv = document.getElementById('results');
+    const searchInput = document.getElementById('search');
+
+    function display(parksList) {
+      resultsDiv.innerHTML = '';
+      parksList.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'park';
+        div.innerHTML = `<strong>${p.name}</strong><br>設施：${p.equipment.join(', ')}`;
+        resultsDiv.appendChild(div);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const keyword = searchInput.value.toLowerCase();
+      const filtered = parks.filter(p =>
+        p.name.includes(keyword) ||
+        p.equipment.some(e => e.includes(keyword))
+      );
+      display(filtered);
+    });
+
+    display(parks);
+  </script>
+</body>
+</html>
